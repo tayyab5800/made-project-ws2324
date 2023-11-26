@@ -37,7 +37,7 @@ sqlite_types = {
     "Laenge": types.FLOAT(),
     "Breite": types.FLOAT(),
     "Betreiber_Name": types.TEXT(),
-    "Betreiber_Nr": types.TEXT()
+    "Betreiber_Nr": types.INT()
 }
 path = os.getcwd()
 db_path = os.path.join(path, "trainstops.sqlite")
