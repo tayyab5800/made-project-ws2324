@@ -1,5 +1,6 @@
 import pandas as pd
 import os
+from constants import urls
 
 class DataExtractor:
     def __init__(self, output_folder='data'):
@@ -38,23 +39,15 @@ class DataExtractor:
         # Save the transformed DataFrame back to the same file
         df.to_csv(file_path, index=False)
         
+    def cleanup(self, data_extractor_instance):
+        # Cleanup: Remove the test_data folder and its contents after the tests
+        if os.path.exists(data_extractor_instance.output_folder):
+            for file_name in os.listdir(data_extractor_instance.output_folder):
+                file_path = os.path.join(data_extractor_instance.output_folder, file_name)
+                os.remove(file_path)
+            os.rmdir(data_extractor_instance.output_folder)
 
 if __name__ == "__main__":
-    # link to all data sources
-    urls = [
-        "https://raw.githubusercontent.com/tayyab5800/german-housing-prices-drop/main/1-cpi-germany-individual-consumption-by-purpose-61111-0004.csv",
-        "https://raw.githubusercontent.com/tayyab5800/german-housing-prices-drop/main/2-1-cpi-12-factors-monthly-levels.csv",
-        "https://raw.githubusercontent.com/tayyab5800/german-housing-prices-drop/main/2-2-cpi-12-factors-change-on-previous-months.csv",
-        "https://raw.githubusercontent.com/tayyab5800/german-housing-prices-drop/main/2-3-cpi-12-factors-annual-avg.csv",
-        "https://raw.githubusercontent.com/tayyab5800/german-housing-prices-drop/main/2-4-cpi-12-factors-change_on_prev_years.csv",
-        "https://raw.githubusercontent.com/tayyab5800/german-housing-prices-drop/main/3-interest-rate.csv",
-        "https://raw.githubusercontent.com/tayyab5800/german-housing-prices-drop/main/4-1-cpi-sp-energy-data.csv",
-        "https://raw.githubusercontent.com/tayyab5800/german-housing-prices-drop/main/4-2-cpi-sp-energy-data-annual-avg.csv",
-        "https://raw.githubusercontent.com/tayyab5800/german-housing-prices-drop/main/4-3-cpi-sp-energy-dist-data.csv",
-        "https://raw.githubusercontent.com/tayyab5800/german-housing-prices-drop/main/5-housing-prices-6-quarters-61262-0002.csv",
-        "https://raw.githubusercontent.com/tayyab5800/german-housing-prices-drop/main/6-1-property-price-indices-district-types.csv",
-        "https://raw.githubusercontent.com/tayyab5800/german-housing-prices-drop/main/6-2-property-price-indices-rate-of-change.csv"
-        ]
 
     data_files_path = []
     helper = DataExtractor()
