@@ -1,0 +1,105 @@
+// Creating pipeline
+pipeline AirportsPipeline {
+
+    CarsExtractor 
+        -> CarsTextFileInterpreter 
+        -> CarsCSVInterpreter 
+        -> CarsRowDeleter
+        -> RenameColumn1
+        -> RenameColumn2
+        -> RenameColumn3
+        -> RenameColumn4
+        -> RenameColumn5
+        -> RenameColumn6
+        -> RenameColumn7
+        -> RenameColumn8
+        -> CarsTableInterpreter
+        -> CarsLoader;
+
+    // Extracting data from source
+    // None to File
+    block CarsExtractor oftype HttpExtractor {
+        url: "https://www-genesis.destatis.de/genesis/downloads/00/tables/46251-0021_00.csv";
+    }
+
+    // Return previous result as a file. 
+    // File to TextFile
+    block CarsTextFileInterpreter oftype TextFileInterpreter { 
+        encoding: "latin2";
+    }
+
+    // Split data on ";" delimeter
+    // TextFile to Sheet
+    block CarsCSVInterpreter oftype CSVInterpreter {
+        delimiter: ";";
+    }
+
+    // Sheet to Sheet
+    block CarsRowDeleter oftype RowDeleter {
+        delete: [
+            row 1, row 2, row 3, row 4, row 5, row 6, 
+            row 484, row 485, row 486, row 487
+            ];
+        }
+
+    // Sheet to Sheet
+    block RenameColumn1 oftype CellWriter {
+        at: range A1:C1;
+        write: ["date", "CIN", "name"];
+    }
+    
+    block RenameColumn2 oftype CellWriter {
+        at: cell M1;
+        write: ["petrol"];
+    }
+
+    block RenameColumn3 oftype CellWriter {
+        at: cell W1;
+        write: ["diesel"];
+    }
+
+    block RenameColumn4 oftype CellWriter {
+        at: cell AG1;
+        write: ["gas"];
+    }
+    block RenameColumn5 oftype CellWriter {
+        at: cell AQ1;
+        write: ["electro"];
+    }
+    block RenameColumn6 oftype CellWriter {
+        at: cell BA1;
+        write: ["hybrid"];
+    }
+    block RenameColumn7 oftype CellWriter {
+        at: cell BK1;
+        write: ["plugInHybrid"];
+    }
+    block RenameColumn8 oftype CellWriter {
+        at: cell BU1;
+        write: ["others"];
+    }
+    
+    // Defining first row as Header and defining data types of all columns
+    // Sheet to Table
+    block CarsTableInterpreter oftype TableInterpreter {
+        header: true;
+        columns: [
+            "date" oftype text,
+            "CIN" oftype text,
+            "name" oftype text,
+            "petrol" oftype integer,
+            "diesel" oftype integer,
+            "gas" oftype integer,
+            "electro" oftype integer,
+            "hybrid" oftype integer,
+            "plugInHybrid" oftype integer,
+            "others" oftype integer
+        ];
+    }
+
+    // Load results in sqlite database
+    block CarsLoader oftype SQLiteLoader {
+        table: "cars";
+        file: "./cars.sqlite";
+    }
+}
