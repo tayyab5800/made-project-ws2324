@@ -39,13 +39,14 @@ class DataExtractor:
         # Save the transformed DataFrame back to the same file
         df.to_csv(file_path, index=False)
         
-    def cleanup(self, data_extractor_instance):
+    def cleanup(self, data_extractor_instance='data'):
         # Cleanup: Remove the test_data folder and its contents after the tests
-        if os.path.exists(data_extractor_instance.output_folder):
-            for file_name in os.listdir(data_extractor_instance.output_folder):
-                file_path = os.path.join(data_extractor_instance.output_folder, file_name)
+        if os.path.exists(data_extractor_instance):
+            for file_name in os.listdir(data_extractor_instance):
+                file_path = os.path.join(data_extractor_instance, file_name)
                 os.remove(file_path)
-            os.rmdir(data_extractor_instance.output_folder)
+            os.rmdir(data_extractor_instance)
+            return True
 
 if __name__ == "__main__":
 
@@ -60,3 +61,5 @@ if __name__ == "__main__":
 
     for file_path in data_files_path:
         helper.transform(file_path)
+    
+    helper.cleanup()
