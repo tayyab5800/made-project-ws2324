@@ -66,12 +66,11 @@ if __name__ == "__main__":
     for file_path in data_files_path:
         helper.transform(file_path)
     
-    #helper.cleanup()
     try:
         # Load and plot data from File 2-1-cpi-12-factors-monthly-levels
         df_cpi_12_factors = pd.read_csv(data_files_path[1])
 
-        # Heatmap for correlation matrix (excluding 'year' and 'month' columns)
+        # Heatmap for correlation matrix
         columns_to_exclude_cpi = ['year', 'month', 'Consumer price index overall']
         correlation_matrix_cpi = df_cpi_12_factors.drop(columns=columns_to_exclude_cpi).corr()
 
@@ -111,9 +110,11 @@ if __name__ == "__main__":
 
         # Line plot for changes in the percentage distribution of each energy source over the years
         fig = px.line(melted_df_cpi_sp_energy_dist, x="year", y="percentage", color="distribution_of_energy_sources",
-                      title="Changes in Percentage Distribution of Energy Sources Over Years",
-                      labels={"percentage": "Percentage Distribution", "year": "Year"})
+                    title="Changes in Percentage Distribution of Energy Sources Over Years",
+                    labels={"percentage": "Percentage Distribution", "year": "Year"})
         fig.show()
 
     except FileNotFoundError as e:
         print(f"Error: {e}")
+        
+    helper.cleanup()
