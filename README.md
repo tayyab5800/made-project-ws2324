@@ -46,16 +46,13 @@ Here is the report link which also shows some Exploratory Data Analysis.
 
   - [German Real Estate Market Analysis Report](https://nbviewer.org/github/tayyab5800/made-project-ws2324/blob/main/report.html)
   
-- #### Static Report
+- #### Presentation Slides
 
-  ```
-  cd project/report.pdf
-  ```
-- #### Source Code of Report
+  - [Presentation Slides Link](https://github.com/tayyab5800/made-project-ws2324/blob/main/project/slides.pdf)
 
-  ```
-  cd project/report.ipynb
-  ```
+- #### Presentation Video
+
+  - [Presentation Video Link](https://drive.google.com/drive/folders/11lIrEw4X624uStaH0uUC2UR7srRjV4PR?usp=sharing)
 
 # Blog Posts:
 
