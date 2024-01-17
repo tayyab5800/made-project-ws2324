@@ -44,7 +44,8 @@ Here is the report link which also shows some Exploratory Data Analysis.
 
 - #### Interactive Live Report
 
-  - [German Real Estate Market Analysis Report](https://nbviewer.org/github/tayyab5800/made-project-ws2324/blob/main/project/report.html)
+  - [German Real Estate Market Analysis Report](https://nbviewer.org/github/tayyab5800/made-project-ws2324/blob/main/report.html)
+  
 - #### Static Report
 
   ```
