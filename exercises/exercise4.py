@@ -21,7 +21,10 @@ csv_file_path = os.getcwd() + '/data.csv'
 # Read only the specified columns
 df = pd.read_csv(csv_file_path, delimiter=';', decimal=',', usecols=["Geraet"])
 
-df.to_clipboard(sep=",")
+clean_csv_path = os.getcwd() + "/clean.csv"
+df["Geraet"].to_csv(clean_csv_path, sep=",")
+print(f"Data is saved to {clean_csv_path}")
+
 
 # Specify first 11 columns to rename the dataset header
 columns_to_read = ["Geraet","Hersteller","Model","Monat",
@@ -31,7 +34,7 @@ columns_to_read = ["Geraet","Hersteller","Model","Monat",
                     "Batterietemperatur in °C", 
                     "Geraet aktiv","extra"]
 
-df = pd.read_clipboard(sep=",")
+df = pd.read_csv(clean_csv_path)
 df.columns = columns_to_read
 df.drop(columns=["extra","Latitude (WGS84)",
                     "Longitude (WGS84)","Verschleierung (m)",
